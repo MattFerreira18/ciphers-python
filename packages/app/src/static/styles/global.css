@@ -8,3 +8,31 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+a, button {
+  transition: 250ms;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+header {
+  border-bottom: 1px solid #c3c5c7;
+  padding: 1.75rem 0;
+}
+
+.header__container {
+  height: 100%;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+main {
+  margin: 2rem auto 0;
+  max-width: 1200px;
+}
