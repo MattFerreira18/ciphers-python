@@ -10,7 +10,7 @@ def result(encryption):
     if (not (encryption) or not (isEncryptionAllowed(encryption))):
         return redirect(url_for('error_page'))
 
-    return render_template('encryption-result.html', encryption=encryption)
+    return render_template('encryption-result.html', encryption=encryption.upper())
 
 
 def error():
