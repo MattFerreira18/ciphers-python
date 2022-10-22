@@ -4,6 +4,7 @@
   box-sizing: border-box;
 }
 
-h2 {
-  color: red;
+body {
+  font-family: 'Roboto', sans-serif;
 }
+
