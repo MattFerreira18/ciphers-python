@@ -21,3 +21,8 @@
 ### How to use it?
 
 (work in progress)
+
+#### Commands to run
+
+(start server in dev mode)
+flask --app src/app.py --debug run
