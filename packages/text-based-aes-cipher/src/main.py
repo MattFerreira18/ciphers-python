@@ -1,5 +1,6 @@
-from constants import ALPHABET, HILL_CIPHER_MATRIX, HILL_CIPHER_MATRIX_INVERSE, SBOX, SBOX_INVERSE, SEPARATOR
 import random
+from utils import preparePlaintext, removeSeparatorFromPlaintext
+from constants import ALPHABET, HILL_CIPHER_MATRIX, HILL_CIPHER_MATRIX_INVERSE, SBOX, SBOX_INVERSE, SEPARATOR
 '''
  Algorithm based in C# implementation of n1k0m0:
  https://github.com/n1k0m0/AES-and-Text-Based-AES
@@ -70,20 +71,20 @@ def Mod(num, modr):
   return ((num % modr) + modr) % modr
 
 def mapNumbersIntoTextSpace(nums, alphabet):
-  text = ''
+  result = ''
 
   for i in nums:
-    text += alphabet[i]
+    result += alphabet[i]
 
-  return text
+  return result
 
 def mapTextIntoNumberSpace(text, alphabet):
-  nums = []
+  result = []
 
   for letter in text:
-    nums.append(alphabet.index(letter))
+    result.append(alphabet.index(letter))
 
-  return nums
+  return result
 
 def genSBoxAndInverse():
   sbox = []
@@ -228,12 +229,12 @@ def rcon(i):
 
 # extract a 4 letter word from the giver offset
 def getWord(data, offset):
-  word = []
+  result = []
 
   for i in range(0, 4):
-    word.append(data[int(offset) * 4 + i])
+    result.append(data[int(offset) * 4 + i])
 
-  return word
+  return result
 
 # set a 4 letter word at the giver offset
 def setWord(data, word, offset):
@@ -242,15 +243,16 @@ def setWord(data, word, offset):
 
 # adds two given 4 letters words MOD alphabet length
 def add(w1, w2):
-  word = []
+  result = []
 
   for i in range(0, 4):
-    word.append(Mod(w1[i] + w2[i], len(ALPHABET)))
+    result.append(Mod(w1[i] + w2[i], len(ALPHABET)))
 
-  return word
+  return result
 
 # rotWord operation of keyschedule of AES
 def rotWord(data):
+  # TODO rename to `result`
   ret = []
 
   ret.append(data[1])
@@ -267,6 +269,7 @@ def subWord(data):
 
     return [num // len(ALPHABET), num % len(ALPHABET)]
 
+# TODO rename to `result`
   ret = [0] * 4
 
   for i in range(0, len(data), 2):
@@ -278,38 +281,32 @@ def subWord(data):
 
 def keyExpansion(k, r):
   n = len(k) / 4
-  w = [0] * 4 * 4 * r
+  result = [0] * 4 * 4 * r
 
   for i in range(0, 4 * r):
     if (i < n):
-      setWord(w, getWord(k, i), i)
+      setWord(result, getWord(k, i), i)
     elif (i >= n and i % n == 0):
-      word = add(getWord(w, i - n), subWord(rotWord(getWord(w, i - 1))))
+      word = add(getWord(result, i - n), subWord(rotWord(getWord(result, i - 1))))
       word = add(word, rcon(i / n))
-      setWord(w, word, i)
+      setWord(result, word, i)
     elif (i >= n and n > 6 and i % n == 4):
-      word = add(getWord(w, i - n), subWord(getWord(w, i - 1)))
-      setWord(w, word, i)
+      word = add(getWord(result, i - n), subWord(getWord(result, i - 1)))
+      setWord(result, word, i)
     else:
-      word = add(getWord(w, i - n), getWord(w, i - 1))
-      setWord(w, word, i)
+      word = add(getWord(result, i - n), getWord(result, i - 1))
+      setWord(result, word, i)
 
-  return w
-
-def preparePlaintext(plaintext):
-   return plaintext.upper().replace(' ', SEPARATOR)
-
-def removeSeparatorFromPlaintext(plaintext):
-  return plaintext.replace(SEPARATOR, ' ')
+  return result
 
 def encrypt(text, key, r):
   def getRoundKey(data, offset):
-    word = []
+    result = []
 
     for i in range(0, 16):
-      word.append(data[offset * 16 + i])
+      result.append(data[offset * 16 + i])
 
-    return word
+    return result
 
 
   # key expansion => make multiple out of the given key
@@ -386,23 +383,25 @@ def decryptBlock(ciphertext, key):
   return mapNumbersIntoTextSpace(plaintext, ALPHABET)
 
 def encryptECB(plaintext, key):
+  plaintext = preparePlaintext(plaintext)
+
   while len(plaintext) % 16 > 0:
     plaintext += SEPARATOR
 
-  string = ''
+  result = ''
 
   for i in range(0, len(plaintext), 16):
-    string += encryptBlock(plaintext[i:16 + i], key)
+    result += encryptBlock(plaintext[i:16 + i], key)
 
-  return string
+  return result
 
-def decryptECB(cipherText, key):
-  if (len(cipherText) % 16 != 0):
+def decryptECB(ciphertext, key):
+  if (len(ciphertext) % 16 != 0):
     raise Exception('Cipher text length is no multiple of 16')
 
-  string = ''
+  result = ''
 
-  for i in range(0, len(cipherText), 16):
-    string += decryptBlock(cipherText[i:16 + i], key)
+  for i in range(0, len(ciphertext), 16):
+    result += decryptBlock(ciphertext[i:16 + i], key)
 
-  return string
+  return removeSeparatorFromPlaintext(result)

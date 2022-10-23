@@ -1,23 +1,13 @@
-from main import encryptECB, decryptECB, preparePlaintext, removeSeparatorFromPlaintext
-from constants import ALPHABET
-import random
-
-def genRandomTextKey():
-  text = ''
-
-  for i in range(0, 16):
-    text += ALPHABET[random.randint(0, len(ALPHABET) - 1)]
-
-  return text
-
+from main import encryptECB, decryptECB
+from utils import genRandomTextKey
 
 def firstTest():
   text = "HELLO WORLD THIS IS A TEST OF MY TEXT AES CIPHER"
   key  = "ASVRFWGSSCXBLSKW"
-  ciphertext = encryptECB(preparePlaintext(text), key)
+  ciphertext = encryptECB(text, key)
   plaintext = decryptECB(ciphertext, key)
 
-  print('TEST N1:', text == removeSeparatorFromPlaintext(plaintext))
+  print('TEST N1:', text == plaintext and text != ciphertext)
 
 def secondTest():
   text = "HELLOXWORLDXTHISXISXAXTESTXOFXMYXTEXTXAESXCIPHER"
@@ -25,15 +15,15 @@ def secondTest():
   ciphertext = encryptECB(text, key)
   plaintext = decryptECB(ciphertext, key)
 
-  print('TEST N2:', text == removeSeparatorFromPlaintext(plaintext))
+  print('TEST N2:', text == plaintext and text != ciphertext)
 
 def thirdTest():
   text = "HELLOXWORLDXTHISXISXAXTESTXOFXMYXTEXTXAESXCIPHER"
   key = genRandomTextKey()
-  ciphertext = encryptECB(preparePlaintext(text), key)
+  ciphertext = encryptECB(text, key)
   plaintext = decryptECB(ciphertext, key)
 
-  print('TEST N3:', text == removeSeparatorFromPlaintext(plaintext))
+  print('TEST N3:', text == plaintext and text != ciphertext)
 
 def main():
     print('UNIT TESTS RESULT:')
