@@ -1,6 +1,4 @@
-# import hashlib
-import io
-from pydoc import describe
+import sys
 import random
 # from Crypto import Random
 # from Crypto.Cipher import AES
@@ -145,6 +143,9 @@ HILL_CIPHER_MATRIX_INVERSE = [
   9, 19, 25, 14,
 ]
 
+# Is necessary to be a latin letter and in UPPER case
+SEPARATOR = 'J'
+
 # TODO rename
 def Mod(num, modr):
   return ((num % modr) + modr) % modr
@@ -220,7 +221,7 @@ def subBigrams(data):
 
 def subBigramsInverse(data):
   def subBigramInverse(bigram):
-    offset = bigram[0] + len(ALPHABET) + bigram[1]
+    offset = bigram[0] * len(ALPHABET) + bigram[1]
     num = SBOX_INVERSE[offset]
 
     return [num // len(ALPHABET), num % len(ALPHABET)]
@@ -392,7 +393,10 @@ def keyExpansion(k, r):
   return w
 
 def preparePlaintext(plaintext):
-   plaintext = plaintext.upper().replace(' ', 'X')
+   return plaintext.upper().replace(' ', SEPARATOR)
+
+def removeSeparatorFromPlaintext(plaintext):
+  return plaintext.replace(SEPARATOR, ' ')
 
 def encrypt(text, key, r):
   def getRoundKey(data, offset):
@@ -441,22 +445,22 @@ def decrypt(text, key, r):
   def getRoundKey(data, offset):
     word = []
 
-    word[0] = data[offset * 16 + 0]
-    word[1] = data[offset * 16 + 1]
-    word[2] = data[offset * 16 + 2]
-    word[3] = data[offset * 16 + 3]
-    word[4] = data[offset * 16 + 4]
-    word[5] = data[offset * 16 + 5]
-    word[6] = data[offset * 16 + 6]
-    word[7] = data[offset * 16 + 7]
-    word[8] = data[offset * 16 + 8]
-    word[9] = data[offset * 16 + 9]
-    word[10] = data[offset * 16 + 10]
-    word[11] = data[offset * 16 + 11]
-    word[12] = data[offset * 16 + 12]
-    word[13] = data[offset * 16 + 13]
-    word[14] = data[offset * 16 + 14]
-    word[15] = data[offset * 16 + 15]
+    word.append(data[offset * 16 + 0])
+    word.append(data[offset * 16 + 1])
+    word.append(data[offset * 16 + 2])
+    word.append(data[offset * 16 + 3])
+    word.append(data[offset * 16 + 4])
+    word.append(data[offset * 16 + 5])
+    word.append(data[offset * 16 + 6])
+    word.append(data[offset * 16 + 7])
+    word.append(data[offset * 16 + 8])
+    word.append(data[offset * 16 + 9])
+    word.append(data[offset * 16 + 10])
+    word.append(data[offset * 16 + 11])
+    word.append(data[offset * 16 + 12])
+    word.append(data[offset * 16 + 13])
+    word.append(data[offset * 16 + 14])
+    word.append(data[offset * 16 + 15])
 
     return word
 
@@ -468,13 +472,13 @@ def decrypt(text, key, r):
   shiftRowsInverse(text)
   subBigramsInverse(text)
 
-  for i in range(r, 1, -1):
-    subtractRoundKey(text, getRoundKey(roundKeys, r))
+  for i in range(r - 1, 0, -1):
+    subtractRoundKey(text, getRoundKey(roundKeys, i))
     mixColumnsInverse(text)
     shiftRowsInverse(text)
     subBigramsInverse(text)
 
-  # subtract 0 key
+  # # subtract 0 key
   subtractRoundKey(text, getRoundKey(roundKeys, 0))
 
   return text
@@ -507,7 +511,7 @@ def decryptBlock(ciphertext, key):
 
 def encryptECB(plaintext, key):
   while len(plaintext) % 16 > 0:
-    plaintext += 'X'
+    plaintext += SEPARATOR
 
   string = ''
 
@@ -527,38 +531,37 @@ def decryptECB(cipherText, key):
 
   return string
 
-def textBasedAES():
-  # print("Some test encryption and decryption of text-based AES:")
+def unitTests():
+  def firstTest():
+    text = "HELLO WORLD THIS IS A TEST OF MY TEXT AES CIPHER"
+    key  = "ASVRFWGSSCXBLSKW"
+    ciphertext = encryptECB(preparePlaintext(text), key)
+    plaintext = decryptECB(ciphertext, key)
 
-  # print("Testing with first key:")
-  text = "HELLOXWORLDXTHISXISXAXTESTXOFXMYXTEXTXAESXCIPHER"
-  key  = "AAAAAAAAAAAAAAAA"
-  print(text)
-  ciphertext = encryptECB(text, key)
-  print(ciphertext)
-  # plaintext = decryptECB(ciphertext, key)
-  # print(plaintext)
+    print('TEST N1:', text == removeSeparatorFromPlaintext(plaintext))
 
-  # print("Testing with second key:")
-  # text = "HELLOXWORLDXTHISXISXAXTESTXOFXMYXTEXTXAESXCIPHER"
-  # key = "BAAAAAAAAAAAAAAA"
-  # print(text)
-  # ciphertext = encryptECB(text, key)
-  # print(ciphertext)
-  # plaintext = decryptECB(ciphertext, key)
-  # print(plaintext)
+  def secondTest():
+    text = "HELLOXWORLDXTHISXISXAXTESTXOFXMYXTEXTXAESXCIPHER"
+    key = "BAAAAAAAAAAAAAAA"
+    ciphertext = encryptECB(text, key)
+    plaintext = decryptECB(ciphertext, key)
 
-  # print("Testing with random key:")
-  # text = "HELLOXWORLDXTHISXISXAXTESTXOFXMYXTEXTXAESXCIPHER"
-  # key = genRandomTextKey()
-  # print(text)
-  # ciphertext = encryptECB(text, key)
-  # print(ciphertext)
-  # plaintext = decryptECB(ciphertext, key)
-  # print(plaintext)
+    print('TEST N2:', text == removeSeparatorFromPlaintext(plaintext))
 
+  def thirdTest():
+      text = "HELLOXWORLDXTHISXISXAXTESTXOFXMYXTEXTXAESXCIPHER"
+      key = genRandomTextKey()
+      ciphertext = encryptECB(preparePlaintext(text), key)
+      plaintext = decryptECB(ciphertext, key)
 
-def main():
-  textBasedAES()
+      print('TEST N3:', text == removeSeparatorFromPlaintext(plaintext))
 
-main()
+  def main():
+    print('UNIT TESTS RESULT:')
+    firstTest()
+    secondTest()
+    thirdTest()
+
+  main();
+
+sys.modules[__name__] = { encrypt, decrypt }
