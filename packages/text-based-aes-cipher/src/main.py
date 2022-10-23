@@ -66,7 +66,6 @@ import random
 
 '''
 
-# TODO rename
 def Mod(num, modr):
   return ((num % modr) + modr) % modr
 
@@ -210,10 +209,8 @@ def mixColumns(data):
     b2 = data[i + 2]
     b3 = data[i + 3]
 
-    data[i]     = (HILL_CIPHER_MATRIX[0] * b0 + HILL_CIPHER_MATRIX[4] * b1 + HILL_CIPHER_MATRIX[8] * b2 + HILL_CIPHER_MATRIX[12] * b3) % len(ALPHABET)
-    data[i + 1] = (HILL_CIPHER_MATRIX[1] * b0 + HILL_CIPHER_MATRIX[5] * b1 + HILL_CIPHER_MATRIX[9] * b2 + HILL_CIPHER_MATRIX[13] * b3) % len(ALPHABET)
-    data[i + 2] = (HILL_CIPHER_MATRIX[2] * b0 + HILL_CIPHER_MATRIX[6] * b1 + HILL_CIPHER_MATRIX[10] * b2 + HILL_CIPHER_MATRIX[14] * b3) % len(ALPHABET)
-    data[i + 3] = (HILL_CIPHER_MATRIX[3] * b0 + HILL_CIPHER_MATRIX[7] * b1 + HILL_CIPHER_MATRIX[11] * b2 + HILL_CIPHER_MATRIX[15] * b3) % len(ALPHABET)
+    for y in range(0, 4):
+      data[i + y] = (HILL_CIPHER_MATRIX[y] * b0 + HILL_CIPHER_MATRIX[y + 4] * b1 + HILL_CIPHER_MATRIX[y + 8] * b2 + HILL_CIPHER_MATRIX[y + 12] * b3) % len(ALPHABET)
 
 def mixColumnsInverse(data):
   for i in range(0, 16, 4):
@@ -222,10 +219,8 @@ def mixColumnsInverse(data):
     b2 = data[i + 2]
     b3 = data[i + 3]
 
-    data[i]     = (HILL_CIPHER_MATRIX_INVERSE[0] * b0 + HILL_CIPHER_MATRIX_INVERSE[4] * b1 + HILL_CIPHER_MATRIX_INVERSE[8] * b2 + HILL_CIPHER_MATRIX_INVERSE[12] * b3) % len(ALPHABET)
-    data[i + 1] = (HILL_CIPHER_MATRIX_INVERSE[1] * b0 + HILL_CIPHER_MATRIX_INVERSE[5] * b1 + HILL_CIPHER_MATRIX_INVERSE[9] * b2 + HILL_CIPHER_MATRIX_INVERSE[13] * b3) % len(ALPHABET)
-    data[i + 2] = (HILL_CIPHER_MATRIX_INVERSE[2] * b0 + HILL_CIPHER_MATRIX_INVERSE[6] * b1 + HILL_CIPHER_MATRIX_INVERSE[10] * b2 + HILL_CIPHER_MATRIX_INVERSE[14] * b3) % len(ALPHABET)
-    data[i + 3] = (HILL_CIPHER_MATRIX_INVERSE[3] * b0 + HILL_CIPHER_MATRIX_INVERSE[7] * b1 + HILL_CIPHER_MATRIX_INVERSE[11] * b2 + HILL_CIPHER_MATRIX_INVERSE[15] * b3) % len(ALPHABET)
+    for y in range(0, 4):
+      data[i + y] = (HILL_CIPHER_MATRIX_INVERSE[y] * b0 + HILL_CIPHER_MATRIX_INVERSE[y + 4] * b1 + HILL_CIPHER_MATRIX_INVERSE[y + 8] * b2 + HILL_CIPHER_MATRIX_INVERSE[y + 12] * b3) % len(ALPHABET)
 
 # AES round constants here we just take a letter from the alphabet
 def rcon(i):
@@ -249,10 +244,8 @@ def setWord(data, word, offset):
 def add(w1, w2):
   word = []
 
-  word.append(Mod(w1[0] + w2[0], len(ALPHABET)))
-  word.append(Mod(w1[1] + w2[1], len(ALPHABET)))
-  word.append(Mod(w1[2] + w2[2], len(ALPHABET)))
-  word.append(Mod(w1[3] + w2[3], len(ALPHABET)))
+  for i in range(0, 4):
+    word.append(Mod(w1[i] + w2[i], len(ALPHABET)))
 
   return word
 
@@ -313,42 +306,28 @@ def encrypt(text, key, r):
   def getRoundKey(data, offset):
     word = []
 
-    word.append(data[offset * 16])
-    word.append(data[offset * 16 + 1])
-    word.append(data[offset * 16 + 2])
-    word.append(data[offset * 16 + 3])
-    word.append(data[offset * 16 + 4])
-    word.append(data[offset * 16 + 5])
-    word.append(data[offset * 16 + 6])
-    word.append(data[offset * 16 + 7])
-    word.append(data[offset * 16 + 8])
-    word.append(data[offset * 16 + 9])
-    word.append(data[offset * 16 + 10])
-    word.append(data[offset * 16 + 11])
-    word.append(data[offset * 16 + 12])
-    word.append(data[offset * 16 + 13])
-    word.append(data[offset * 16 + 14])
-    word.append(data[offset * 16 + 15])
+    for i in range(0, 16):
+      word.append(data[offset * 16 + i])
 
     return word
 
 
   # key expansion => make multiple out of the given key
-  roundKeys = keyExpansion(key, r + 1)
+  round_keys = keyExpansion(key, r + 1)
   # add 0 key
-  addRoundKey(text, getRoundKey(roundKeys, 0))
+  addRoundKey(text, getRoundKey(round_keys, 0))
 
 
   for i in range(1, r):
     subBigrams(text)
     shiftRows(text)
     mixColumns(text)
-    addRoundKey(text, getRoundKey(roundKeys, i))
+    addRoundKey(text, getRoundKey(round_keys, i))
 
   # final round without mix columns
   subBigrams(text)
   shiftRows(text)
-  addRoundKey(text, getRoundKey(roundKeys, r))
+  addRoundKey(text, getRoundKey(round_keys, r))
 
   return text
 
@@ -356,41 +335,27 @@ def decrypt(text, key, r):
   def getRoundKey(data, offset):
     word = []
 
-    word.append(data[offset * 16 + 0])
-    word.append(data[offset * 16 + 1])
-    word.append(data[offset * 16 + 2])
-    word.append(data[offset * 16 + 3])
-    word.append(data[offset * 16 + 4])
-    word.append(data[offset * 16 + 5])
-    word.append(data[offset * 16 + 6])
-    word.append(data[offset * 16 + 7])
-    word.append(data[offset * 16 + 8])
-    word.append(data[offset * 16 + 9])
-    word.append(data[offset * 16 + 10])
-    word.append(data[offset * 16 + 11])
-    word.append(data[offset * 16 + 12])
-    word.append(data[offset * 16 + 13])
-    word.append(data[offset * 16 + 14])
-    word.append(data[offset * 16 + 15])
+    for i in range(0, 16):
+      word.append(data[offset * 16 + i])
 
     return word
 
   # key expansion => make multiple out of the given key
-  roundKeys = keyExpansion(key, r + 1)
+  round_keys = keyExpansion(key, r + 1)
 
   # final round without mix columns
-  subtractRoundKey(text, getRoundKey(roundKeys, r))
+  subtractRoundKey(text, getRoundKey(round_keys, r))
   shiftRowsInverse(text)
   subBigramsInverse(text)
 
   for i in range(r - 1, 0, -1):
-    subtractRoundKey(text, getRoundKey(roundKeys, i))
+    subtractRoundKey(text, getRoundKey(round_keys, i))
     mixColumnsInverse(text)
     shiftRowsInverse(text)
     subBigramsInverse(text)
 
   # # subtract 0 key
-  subtractRoundKey(text, getRoundKey(roundKeys, 0))
+  subtractRoundKey(text, getRoundKey(round_keys, 0))
 
   return text
 
