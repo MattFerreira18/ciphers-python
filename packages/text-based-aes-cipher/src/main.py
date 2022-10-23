@@ -290,7 +290,6 @@ def keyExpansion(k, r):
   for i in range(0, 4 * r):
     if (i < n):
       setWord(w, getWord(k, i), i)
-
     elif (i >= n and i % n == 0):
       word = add(getWord(w, i - n), subWord(rotWord(getWord(w, i - 1))))
       word = add(word, rcon(i / n))
