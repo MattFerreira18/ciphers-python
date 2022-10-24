@@ -1,0 +1,3 @@
+[submodule "packages/asymmetric-cipher/RSA-cript"]
+	path = packages/asymmetric-cipher/RSA-cript
+	url = https://github.com/alanls1/RSA-cript
