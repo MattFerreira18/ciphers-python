@@ -11,8 +11,8 @@ def main():
     return controllers.home()
 
 
-@app.route('/encryption-result', methods=['GET'])
-@app.route('/encryption-result/<encryption>', methods=['GET'])
+@app.route('/encryption-result', methods=['POST'])
+@app.route('/encryption-result/<encryption>', methods=['POST'])
 def result_page(encryption=None):
     return controllers.result(encryption)
 

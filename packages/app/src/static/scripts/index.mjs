@@ -7,7 +7,7 @@ function main() {
     // TODO validate values of inputs
     // TODO show error messages, if necessary
     // TODO dynamic import helpers
-    // TODO send to /encryption-results/{cryptograph} by query params
+    // TODO send to /encryption-results/{cryptograph} by body { plaintext: <string>, key: <string> }
     // TODO request new page
     return;
   }

@@ -1,4 +1,5 @@
 import ENCRYPTIONS_ERRORS from "./constants/errors.js";
+import { hasOnlyLetters, isAESKeyLengthValid } from "./utils/string.js";
 
 const { AES: ERRORS } = ENCRYPTIONS_ERRORS;
 
