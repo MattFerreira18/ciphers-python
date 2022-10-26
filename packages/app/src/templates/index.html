@@ -16,11 +16,22 @@
   </head>
   <body>
     <header>
-      <div class="header__container">test</div>
+      <div class="header__container">Cripto</div>
     </header>
     <main>
-      <h2>Hello World</h2>
+      <h2>Criptografia Simétrica e Assimétrica</h2>
+      <p><strong>Criptografia</strong> é uma maneira de proteger informações sensíveis onde que somente a pessoa dona desse conteúdo consiga vê-la. Essas informações são ocultadas a partir de uma série de técnicas na qual essas informações se tornam ilegiveis para qualquer um que não tenha uma chave de acesso. Essa chave de acesso pode ser de dois tipos, a <strong>Chave Simétrica</strong> e a <strong>Chave Assimétrica.</strong></p>
+      <p>Para o texto poder ser criptografado, ele não pode conter:</p>
+      <ul>
+        <li>Números, como 1, 2, 3, ...</li>
+        <li>Caracteres especiais, como ç, ~, /, ã, ...</li>
+      </ul>
+      <form action="/encryption-result" method="POST">
+        <label for="main__form__plaintext">Texto:</label>
+        <input type="text" id="main__form__plaintext" name="plaintext">
+        <button type="submit">Encriptografar</button>
+      </form>
     </main>
-    <script type="module" src="/static/scripts/index.mjs"></script>
+    <!-- <script type="module" src="/static/scripts/index.mjs"></script> -->
   </body>
 </html>

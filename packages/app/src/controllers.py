@@ -1,35 +1,27 @@
 from flask import render_template, redirect, url_for, request
-from utils import isEncryptionAllowed, hasOnlyLetters, isAESKeyLengthValid
+from utils import hasOnlyLetters
 
+AES_KEY = 'CFPLGAABCDEFMKOC'
 
 def home():
     return render_template('index.html')
 
-
-def result(encryption):
+def encryption_result():
   try:
-    data = request.get_json()
-    plaintext = data['plaintext']
-    key = data['key']
+    plaintext = request.form.get('plaintext')
 
-    if (not (encryption) or not (isEncryptionAllowed(encryption))):
-        raise Exception('invalid encryption method')
+    aes_result = 'fn(plaintext, AES_KEY)'
+    asymmetric_result = 'fn(plaintext)'
 
-    if (not(plaintext) or not(key)):
-        raise Exception('fields can be filled')
-
-    if (encryption == 'aes'):
-      if (not(isAESKeyLengthValid(key)) or not(hasOnlyLetters(plaintext)) or not(hasOnlyLetters(key))):
-        raise Exception('invalid fields')
-
-      # TODO realize AES cryptograph
-    else:
-      # TODO realize Asymmetric cryptograph
-      print()
-
-    return render_template('encryption-result.html', encryption=encryption.upper())
+    return redirect(url_for('result', aes=aes_result, asymmetric=asymmetric_result))
   except:
-    return redirect(url_for('error_page'))
+    return render_template('error.html')
+
+def result():
+  aes = request.args.get('aes')
+  asymmetric = request.args.get('asymmetric')
+
+  return render_template('encryption-result.html', aes=aes, asymmetric=asymmetric)
 
 
 def error():

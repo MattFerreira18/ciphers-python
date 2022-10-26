@@ -38,13 +38,35 @@ header {
 .header__container {
   height: 100%;
   width: 100%;
-  max-width: 1200px;
+  max-width: 560px;
   margin: 0 auto;
 }
 
 main {
   margin: 4rem auto 0;
-  max-width: 1200px;
+  max-width: 560px;
+  border-bottom: 1px solid red;
+}
+
+main h2 {
+  margin-bottom: 1rem;
+  color: rgb(138, 6, 6);
+}
+
+form input {
+  margin-bottom: 1rem;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  margin: 0 auto;
 }
 
 @media (max-width: 480px) {
