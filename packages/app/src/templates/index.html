@@ -11,27 +11,82 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/static/styles/global.css" />
+    <link rel="stylesheet" href="/static/styles/home.css" />
     <base href="/" />
     <title>Criptografias em Python</title>
   </head>
   <body>
     <header>
-      <div class="header__container">Cripto</div>
+      <div class="header__container"><span>Cripto</span>grafia</div>
     </header>
     <main>
       <h2>Criptografia Simétrica e Assimétrica</h2>
-      <p><strong>Criptografia</strong> é uma maneira de proteger informações sensíveis onde que somente a pessoa dona desse conteúdo consiga vê-la. Essas informações são ocultadas a partir de uma série de técnicas na qual essas informações se tornam ilegiveis para qualquer um que não tenha uma chave de acesso. Essa chave de acesso pode ser de dois tipos, a <strong>Chave Simétrica</strong> e a <strong>Chave Assimétrica.</strong></p>
-      <p>Para o texto poder ser criptografado, ele não pode conter:</p>
-      <ul>
-        <li>Números, como 1, 2, 3, ...</li>
-        <li>Caracteres especiais, como ç, ~, /, ã, ...</li>
-      </ul>
+      <p class="main__intro">
+        <strong>Criptografia</strong> é uma forma de proteger informações
+        sensíveis onde somente a pessoa dona de uma chave criptográfica (similar a uma senha)
+        específica consegue vê-las. Essas informações são ocultadas a partir de
+        uma série de técnicas na qual elas se tornam ilegiveis para qualquer um
+        que não tenha a chave. Existem dois tipos de chave criptográfica: a
+        <strong>Chave Simétrica</strong> e a
+        <strong>Chave Assimétrica.</strong> Para saber mais, teste criptografar
+        algo escrevendo no campo logo abaixo.
+      </p>
       <form action="/encryption-result" method="POST">
         <label for="main__form__plaintext">Texto:</label>
-        <input type="text" id="main__form__plaintext" name="plaintext">
+        <input
+          type="text"
+          id="main__form__plaintext"
+          name="plaintext"
+          placeholder="algum texto"
+        />
         <button type="submit">Encriptografar</button>
       </form>
+      <div class="main__tip">
+        <h3>Dica:</h3>
+        <p>
+          Para o texto poder ser criptografado corretamente, ele não pode
+          conter:
+        </p>
+        <ul>
+          <li>Números (como 1, 2 e 3)</li>
+          <li>Caracteres especiais (como ç, ~, / e ã)</li>
+        </ul>
+      </div>
     </main>
-    <!-- <script type="module" src="/static/scripts/index.mjs"></script> -->
+    <footer>
+      <div class="footer__container">
+        <p>
+          Feito com ♥ por
+          <a href="https://github.com/alanls1" target="_blank" rel="noreferrer"
+            >Alan</a
+          >,
+          <a
+            href="https://github.com/MattFerreira18"
+            target="_blank"
+            rel="noreferrer"
+            >Matheus</a
+          >
+          e
+          <a
+            href="https://github.com/Glauber10"
+            target="_blank"
+            rel="noreferrer"
+            >Glauber</a
+          >
+        </p>
+        <a
+          href="https://github.com/MattFerreira18/ciphers-python"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <img
+            src="/static/imgs/github-icon.png"
+            alt="Ícone do Github"
+            class="footer__github-icon"
+          />
+        </a>
+      </div>
+    </footer>
+    <script type="module" src="/static/scripts/index.mjs"></script>
   </body>
 </html>

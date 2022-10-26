@@ -1,0 +1,38 @@
+.main_compare-table {
+  display: flex;
+}
+
+.main_compare-table > div {
+  width: 100%;
+}
+
+.main_compare-table > div:first-of-type {
+  margin-right: 1.75rem;
+}
+
+.main_compare-table span[role="button"] {
+  cursor: pointer;
+}
+
+.main_compare-table h4:not(:first-of-type) {
+  margin-top: 1rem;
+}
+
+.main_compare-table li {
+  margin-left: 1.6rem;
+}
+
+.main_compare-table p, .main_compare-table li {
+  font-size: 14px;
+  text-align: justify;
+}
+
+@media (max-width: 480px) {
+  .main_compare-table {
+    flex-direction: column;
+  }
+
+  .main_compare-table > div:first-of-type {
+    margin-bottom: 2rem;
+  }
+}

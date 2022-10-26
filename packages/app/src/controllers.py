@@ -1,6 +1,8 @@
 from flask import render_template, redirect, url_for, request
+
 from utils import hasOnlyLetters
 
+# TODO move to .env
 AES_KEY = 'CFPLGAABCDEFMKOC'
 
 def home():
@@ -10,12 +12,16 @@ def encryption_result():
   try:
     plaintext = request.form.get('plaintext')
 
-    aes_result = 'fn(plaintext, AES_KEY)'
+    if (not(plaintext)):
+      return redirect(url_for('error_page'))
+
+    # TODO
+    aes_result = 'encryptECB(plaintext, AES_KEY)'
     asymmetric_result = 'fn(plaintext)'
 
     return redirect(url_for('result', aes=aes_result, asymmetric=asymmetric_result))
   except:
-    return render_template('error.html')
+    return redirect(url_for('error_page'))
 
 def result():
   aes = request.args.get('aes')

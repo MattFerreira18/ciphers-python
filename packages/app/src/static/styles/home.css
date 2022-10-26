@@ -1,0 +1,60 @@
+.main__intro  {
+  text-align: justify;
+  font-size: 14px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  margin: 1rem auto 0;
+}
+
+input {
+  margin: 0.4rem 0 1rem;
+  border-radius: 4px;
+  padding: 0.6rem;
+  border: 0;
+  outline: none;
+  background: #f2e8cf;
+}
+
+input:focus {
+  outline: 2px solid #bc4749;
+  outline-offset: -2px;
+}
+
+button {
+  padding: 0.6rem;
+  background: #bc4749;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  color: #f2e8cf;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.main__tip {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 4px;
+  background: #bc47492f;
+}
+
+.main__tip h3 {
+  color: #bc4749;
+  margin-bottom: 0.4rem;
+}
+
+.main__tip p, .main__tip li {
+  font-size: 14px;
+}
+
+.main__tip li {
+  margin-left: 1rem;
+}

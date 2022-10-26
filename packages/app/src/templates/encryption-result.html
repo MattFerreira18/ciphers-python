@@ -11,42 +11,100 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/static/styles/global.css" />
+    <link rel="stylesheet" href="/static/styles/encryption-result.css" />
     <title>Resultado da Encriptação</title>
   </head>
   <body>
     <header>
-      <div class="header__container">test</div>
+      <div class="header__container">
+        <a href="/"><span>Cripto</span>grafia</a>
+      </div>
     </header>
     <main>
-      <h2>Resultado da criptografia Simétrica</h2>
-      <p>Texto criptografado: {{ aes_result }}</p>
-      <h3>O que é criptografia simétrica?</p>
-      <p>afadasdsa</p>
-      <h3>Vantagens</h3>
-      <ul>
-        <li>asdada</li>
-        <li>asdadasd</li>
-      </ul>
-      <h3>Desvantagens</h3>
-      <ul>
-        <li>asdasdsadsa</li>
-        <li>asdasdsadasd</li>
-      </ul>
-      <h2>Resultado da encriptação Assimétrica</h2>
-      <p>Texto criptografado: {{ asymmetric_result }}</p>
-      <h3>O que é criptografia assimétrica?</h3>
-      <p>sadasdsadasd</p>
-      <h3>Vantagens</h3>
-      <ul>
-        <li>asdasdas</li>
-        <li>sdasdasdasd</li>
-      </ul>
-      <h3>Desvantagens</h3>
-      <ul>
-        <li>afasdasdasd</li>
-        <li>dsadas</li>
-      </ul>
+      <h2>Resultados</h2>
+      <div class="main_compare-table">
+        <div>
+          <h3>Criptografia Simétrica</h3>
+          <h4>Texto criptografado</h4>
+          <span role="button">{{ aes }}</span>
+          <h4>O que é?</h4>
+          <p>
+            São algoritmos de criptografia que utilizam somente uma chave
+            criptográfica e que esta é compartilhada entre remetente e
+            destinatário.
+          </p>
+          <h4>Vantagens</h4>
+          <ul>
+            <li>São algoritmos rápidos</li>
+            <li>asdadasd</li>
+          </ul>
+          <h4>Desvantagens</h4>
+          <ul>
+            <li>São mais facilmente quebradas;</li>
+            <li>Facilmente configuradas;</li>
+            <li>Caso mais uma pessoa precise acessar as informações, é necessário compartilhar a chave de acesso;</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Criptografia Assimétrica</h3>
+          <h4>Texto criptografado</h4>
+          <span role="button">{{ asymmetric }}</span>
+          <h4>O que é?</h4>
+          <p>
+            São algoritmos de criptografia que utilizam duas chaves
+            criptográficas, uma privada que é pertencente ao dono das
+            informações e uma chave pública, que pode ser compartilhada entre
+            diferentes destinatários.
+          </p>
+          <h4>Vantagens</h4>
+          <ul>
+            <li>Maior segurança;</li>
+            <li>Não é necessário compartilhar chaves privadas;</li>
+            <li>Oferece suporte a assinatura digital;</li>
+          </ul>
+          <h4>Desvantagens</h4>
+          <ul>
+            <li>São algoritmos lentos;</li>
+            <li>Consomem muito poder de processamento</li>
+          </ul>
+        </div>
+      </div>
     </main>
-    <script type="module" src="/static/scripts/index.js"></script>
+    <footer>
+      <div class="footer__container">
+        <p>
+          Feito com ♥ por
+          <a href="https://github.com/alanls1" target="_blank" rel="noreferrer"
+            >Alan</a
+          >,
+          <a
+            href="https://github.com/MattFerreira18"
+            target="_blank"
+            rel="noreferrer"
+            >Matheus</a
+          >
+          e
+          <a
+            href="https://github.com/Glauber10"
+            target="_blank"
+            rel="noreferrer"
+            >Glauber</a
+          >
+        </p>
+        <a
+          href="https://github.com/MattFerreira18/ciphers-python"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <img
+            src="/static/imgs/github-icon.png"
+            alt="Ícone do Github"
+            height="20px"
+            width="20px"
+          />
+        </a>
+      </div>
+    </footer>
+    <script type="module" src="/static/scripts/index.mjs"></script>
   </body>
 </html>
