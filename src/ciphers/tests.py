@@ -1,5 +1,5 @@
-from criptography import encryptECB, decryptECB
-from utils import genRandomTextKey
+from ciphers.criptography import encryptECB, decryptECB
+from ciphers.utils import genRandomTextKey
 
 def firstTest():
   text = "HELLO WORLD THIS IS A TEST OF MY TEXT AES CIPHER"
@@ -19,11 +19,12 @@ def secondTest():
 
 def thirdTest():
   text = "HELLOXWORLDXTHISXISXAXTESTXOFXMYXTEXTXAESXCIPHER"
+  # text = 'SDFSFSDFDSFSD'
   key = genRandomTextKey()
   ciphertext = encryptECB(text, key)
   plaintext = decryptECB(ciphertext, key)
-
-  print('TEST N3:', text == plaintext and text != ciphertext)
+  print(text == plaintext)
+  # print('TEST N3:', text == plaintext and text != ciphertext)
 
 def main():
     print('UNIT TESTS RESULT:')

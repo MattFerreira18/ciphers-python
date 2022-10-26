@@ -1,6 +1,6 @@
 import random
-from utils import preparePlaintext, removeSeparatorFromPlaintext
-from constants import ALPHABET, HILL_CIPHER_MATRIX, HILL_CIPHER_MATRIX_INVERSE, SBOX, SBOX_INVERSE, SEPARATOR
+from ciphers.utils import preparePlaintext, removeSeparatorFromPlaintext
+from ciphers.constants import ALPHABET, HILL_CIPHER_MATRIX, HILL_CIPHER_MATRIX_INVERSE, SBOX, SBOX_INVERSE, SEPARATOR
 
 def Mod(num, modr):
   return ((num % modr) + modr) % modr

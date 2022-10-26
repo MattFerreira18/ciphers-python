@@ -1,5 +1,5 @@
 
-import main
+import controllers
 
 from flask import Flask
 
@@ -7,18 +7,18 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=['GET'])
-def main():
-  return main.home()
+def home():
+  return controllers.home()
 
 @app.route('/result', methods=['GET'])
 def result():
-  return main.result()
+  return controllers.result()
 
 @app.route('/encryption-result', methods=['POST'])
 def encryption_result():
-  return main.encryption_result()
+  return controllers.encryption_result()
 
 
 @app.route('/500', methods=['GET'])
 def error_page():
-  return main.error()
+  return controllers.error()

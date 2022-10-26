@@ -1,5 +1,5 @@
 import random
-from constants import SEPARATOR, ALPHABET
+from ciphers.constants import SEPARATOR, ALPHABET
 
 def genRandomTextKey():
   text = ''

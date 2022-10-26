@@ -1,5 +1,6 @@
 from flask import render_template, redirect, url_for, request
-from ..ciphers.criptography import *
+from ciphers.criptography import encryptECB
+import ciphers.tests
 from utils import hasOnlyLetters
 
 # TODO move to .env
@@ -17,8 +18,9 @@ def encryption_result():
       return redirect(url_for('error_page'))
 
     # TODO
-    aes_result = 'encryptECB(plaintext, AES_KEY)'
+    aes_result = encryptECB(plaintext, AES_KEY)
     asymmetric_result = 'fn(plaintext)'
+    print(aes_result)
 
     return redirect(url_for('result', aes=aes_result, asymmetric=asymmetric_result))
   except:
