@@ -1,5 +1,6 @@
 from flask import render_template, redirect, url_for, request
-from ciphers.aes import encryptECB
+from ciphers.aes import encryptECB as encryptAES
+from ciphers.rsa.main import mensagemCifrada as encryptRSA
 from utils import hasOnlyLetters
 
 # TODO move to .env
@@ -16,9 +17,8 @@ def encryption_result():
     if (not(plaintext) or not(hasOnlyLetters(plaintext))):
       return redirect(url_for('error_page'))
 
-    # TODO
-    aes_result = encryptECB(plaintext, AES_KEY)
-    asymmetric_result = 'fn(plaintext)'
+    aes_result = encryptAES(plaintext, AES_KEY)
+    asymmetric_result = encryptRSA(plaintext)
     print(aes_result)
 
     return redirect(url_for('result', aes=aes_result, asymmetric=asymmetric_result))
