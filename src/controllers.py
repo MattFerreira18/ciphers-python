@@ -1,6 +1,5 @@
 from flask import render_template, redirect, url_for, request
-from ciphers.criptography import encryptECB
-import ciphers.tests
+from ciphers.aes import encryptECB
 from utils import hasOnlyLetters
 
 # TODO move to .env

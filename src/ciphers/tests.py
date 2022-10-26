@@ -1,4 +1,4 @@
-from ciphers.criptography import encryptECB, decryptECB
+from ciphers.aes import encryptECB, decryptECB
 from ciphers.utils import genRandomTextKey
 
 def firstTest():
