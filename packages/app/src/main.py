@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, request
-
+from ..ciphers.criptography import *
 from utils import hasOnlyLetters
 
 # TODO move to .env
@@ -12,7 +12,8 @@ def encryption_result():
   try:
     plaintext = request.form.get('plaintext')
 
-    if (not(plaintext)):
+  # TODO fix regex
+    if (not(plaintext) or not(hasOnlyLetters(plaintext))):
       return redirect(url_for('error_page'))
 
     # TODO
