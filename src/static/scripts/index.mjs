@@ -12,7 +12,7 @@ function main() {
   }
 
   if (window.location.pathname === PAGE_PATHS.RESULT) {
-    const encryptions = document.querySelectorAll('span[role="button"]');
+    const encryptions = document.querySelectorAll('div[role="button"]');
 
     encryptions.forEach((encryption) =>
       encryption.addEventListener("click", () => {
