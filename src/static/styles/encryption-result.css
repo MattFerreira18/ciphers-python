@@ -7,11 +7,21 @@
 }
 
 .main_compare-table > div:first-of-type {
-  margin-right: 1.75rem;
+  margin-right: 3rem;
 }
 
-.main_compare-table span[role="button"] {
+.main_compare-table div[role="button"] {
   cursor: pointer;
+  background: #bc4749;
+  color: #f2e8cf;
+  padding: 0.4rem;
+  border-radius: 4px;
+  margin-top: 0.75rem !important;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 266px;
 }
 
 .main_compare-table h4:not(:first-of-type) {
