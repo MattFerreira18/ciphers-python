@@ -88,7 +88,7 @@ https://github.com/n1k0m0/AES-and-Text-Based-AES
           ↓
       CipherText
 
-    OBS:
+    OBS
     - uses a state of 16 letters
     - **AddRoundKey** -
     - **SubBigrams** -
